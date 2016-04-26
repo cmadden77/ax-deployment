@@ -30,12 +30,6 @@
         "description": "Uri of the your user data disk 0 image"
       }
     },
-    "dnsLabelPrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "DNS Label for the Public IP. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
-      }
-    },
     "domainUsername": {
       "type": "string",
       "metadata": {
@@ -145,11 +139,14 @@
     "ouPath": "OU=Customers; DC=ad; DC=axioma; DC=com",
     "domainJoinOptions": "3",
     "publicIPAddressName": "[concat(variables('vmName'),'PublicIP')]",
+    "publicIPAddressName1": "[concat(variables('vmName1'),'PublicIP')]",
     "existingVNETName": "MGMTVNET",
     "existingSubnetName": "MGMTSubnet,",
     "nicName": "[concat(variables('vmName'),'NIC')]",
     "nicName1": "[concat(variables('vmName1'),'NIC')]",
     "publicIPAddressType": "Dynamic",
+    "dnsLabelPrefix": "[concat('ax-',parameters('envCode'),'-db-',parameters('clientcode'))]",
+    "dnsLabelPrefix1": "[concat('axioma-',parameters('ClientShortName'),'-',parameters('envCode'),'-',parameters('clientcode'))]",
     "vnetID": "[resourceId('ax-mgmt-dc', 'Microsoft.Network/virtualNetworks', variables('existingVNETName'))]",
     "subnetId": "MGMTSubnet",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetId'))]",
@@ -204,7 +201,19 @@
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+          "domainNameLabel": "[variables('dnsLabelPrefix')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName1')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[variables('dnsLabelPrefix1')]"
         }
       }
     },
@@ -224,6 +233,31 @@
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName1')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName1'))]"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
