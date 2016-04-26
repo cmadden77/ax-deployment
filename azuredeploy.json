@@ -600,7 +600,7 @@
         },
         {
           "apiVersion": "[variables('apiVersion')]",
-          "name": "AntiMalware",
+          "name": "AntiMalware1",
           "type": "Microsoft.Resources/deployments",
           "properties": {
             "mode": "Incremental",
