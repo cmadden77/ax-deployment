@@ -154,6 +154,7 @@
     "DataDisk0VhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),parameters('currentdate'),'-DataDisk-0.vhd')]",
     "osDiskVhdName1": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName1'),parameters('currentdate'),'-OS.vhd')]",
     "apiVersion": "2015-06-15",
+    "MalwareTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/malware.json",
     "ScriptStorageAccountName": "us4prodclientsarmaxvms",
     "ScriptFileToRun": "configure-sqlstorage.ps1",
     "ScriptStorageAccountResourceGroup": "ax-mgmt-dc",
@@ -163,6 +164,7 @@
     "NumberOfDisksInDataPool": "2",
     "configurationFunction": "SQLStoragePool.ps1\\SQLStoragePool",
     "DscExtensionName": "DscExtension",
+    "vmExtensionName": "Malware",
     "dataDisk1VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk1.vhd')]",
     "dataDisk2VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk2.vhd')]",
     "dataDisk3VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk3.vhd')]",
@@ -506,6 +508,21 @@
             "type": "JsonADDomainExtension",
             "typeHandlerVersion": "1.0"
           }
+        },
+        {
+          "apiVersion": "[variables('apiVersion')]",
+          "name": "AntiMalware",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('MalwareTemplate')]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "vmName": { "value": "[variables('vmName')]" }
+            }
+          }
         }
       ]
 
@@ -579,6 +596,21 @@
             },
             "type": "JsonADDomainExtension",
             "typeHandlerVersion": "1.0"
+          }
+        },
+        {
+          "apiVersion": "[variables('apiVersion')]",
+          "name": "AntiMalware",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('MalwareTemplate')]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "vmName": { "value": "[variables('vmName1')]" }
+            }
           }
         }
       ]
