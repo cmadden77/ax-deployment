@@ -1,0 +1,58 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "userImageStorageAccountName": {
+      "value": "us4prodclientsarmaxvms"
+    },
+    "osDiskVhdUri": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-os-2015-11-17.vhd"
+    },
+    "dataDisk0VhdUri": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-datadisk-0-2015-11-17.vhd"
+    },
+    "dnsLabelPrefix": {
+      "value": "axtesthioiop04"
+    },
+    "domainUsername": {
+      "value": "adadministrator"
+    },
+    "domainPassword": {
+      "value": "Orange16"
+    },
+    "adminUserName": {
+      "value": "adadministrator"
+    },
+    "adminPassword": {
+      "value": "Orange16"
+    },
+    "sizeOfEachDataDiskInGB": {
+      "value": "10"
+    },
+    "vmSize": {
+      "value": "Standard_d14"
+    },
+    "SQLStoragePool": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/scripts/configure-sqlstorage.ps1"
+    },
+    "createStorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "datacenterCode": {
+      "value": "us4"
+    },
+    "envCode": {
+      "value": "prod"
+    },
+    "ClientCode": {
+      "value": "tt"
+    },
+    "clientShortName": {
+      "value": "test05"
+    },
+    "currentDate": {
+      "value": "16-04-25"
+    }
+  }
+}
+
