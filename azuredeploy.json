@@ -602,6 +602,10 @@
           "apiVersion": "[variables('apiVersion')]",
           "name": "AntiMalware1",
           "type": "Microsoft.Resources/deployments",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
+            "[concat('Microsoft.Compute/virtualMachines/extensions/', variables('vmName1'),'joindomain')]"
+          ],
           "properties": {
             "mode": "Incremental",
             "templateLink": {
