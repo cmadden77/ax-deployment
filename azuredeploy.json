@@ -546,6 +546,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
           ],
           "properties": {
@@ -660,6 +661,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
           ],
           "properties": {
