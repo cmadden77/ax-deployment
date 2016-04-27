@@ -354,7 +354,7 @@
         },
         {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(parameters('vmName'),'/','Antimalware')]",
+        "name": "[concat(variables('vmName1'),'/','Antimalware')]",
         "apiVersion": "2015-05-01-preview",
         "location": "[resourceGroup().location]",
         "properties": {
@@ -367,7 +367,7 @@
               "Paths": "f:\\sysvol\\;f:\\ntds\\;",
               "Extensions": ".mdf;.ldf;.ndf;.bak;.trn;.edb;.sdb;.chk;.jrs;.pol;.dit",
               "Processes": "sqlserver.exe;ReportingServicesService.exe;MSMDSrv.exe"
-            },
+               },
             "RealtimeProtectionEnabled": "true",
             "ScheduledScanSettings": {
               "isEnabled": "true",
