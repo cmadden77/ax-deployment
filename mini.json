@@ -353,10 +353,7 @@
           }
         },
         {
-          "apiVersion": "2015-05-01-preview",
           "name": "[concat(variables('vmName1'),'/AntiMalware')]",
-          "location": "[resourceGroup().location]",
-          "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
