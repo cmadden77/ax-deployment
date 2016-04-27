@@ -8,6 +8,18 @@
         "description": "This is the name of the your storage account"
       }
     },
+    "workspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "OMS workspace ID"
+      }
+    },
+    "workspaceKey": {
+      "type": "string",
+      "metadata": {
+        "description": "OMS workspace ID"
+      }
+    },
     "osDiskVhdUri": {
       "type": "string",
       "defaultValue": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-os-2015-11-17.vhd",
@@ -510,12 +522,12 @@
           }
         },
         {
-          "apiVersion": "[variables('apiVersion')]",
-          "name": "AntiMalware",
-          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2016-02-01",
+          "name": "[concat(variables('vmName'),'/AntiMalware')]",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/AntiMalware')]"
           ],
           "properties": {
             "mode": "Incremental",
@@ -525,6 +537,27 @@
             },
             "parameters": {
               "vmName": { "value": "[variables('vmName')]" }
+            }
+          }
+        },
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName'), '/Microsoft.EnterpriseCloud.Monitoring')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+            "type": "MicrosoftMonitoringAgent",
+            "typeHandlerVersion": "1.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "workspaceId": "[parameters('workspaceId')]"
+            },
+            "protectedSettings": {
+              "workspaceKey": "[parameters('workspaceKey')]"
             }
           }
         }
@@ -603,9 +636,9 @@
           }
         },
         {
-          "apiVersion": "[variables('apiVersion')]",
-          "name": "AntiMalware1",
-          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2016-02-01",
+          "name": "[concat(variables('vmName1'),'/AntiMalware')]",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
@@ -618,6 +651,27 @@
             },
             "parameters": {
               "vmName": { "value": "[variables('vmName1')]" }
+            }
+          }
+        },
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName1'), '/Microsoft.EnterpriseCloud.Monitoring')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+            "type": "MicrosoftMonitoringAgent",
+            "typeHandlerVersion": "1.0",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "workspaceId": "[parameters('workspaceId')]"
+            },
+            "protectedSettings": {
+              "workspaceKey": "[parameters('workspaceKey')]"
             }
           }
         }
