@@ -527,7 +527,7 @@
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/AntiMalware')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
           ],
           "properties": {
             "mode": "Incremental",
@@ -547,7 +547,7 @@
           "location": "[resourceGroup().location]",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/AntiMalware')]"
           ],
           "properties": {
             "publisher": "Microsoft.EnterpriseCloud.Monitoring",
@@ -662,7 +662,7 @@
           "location": "[resourceGroup().location]",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/AntiMalware')]"
           ],
           "properties": {
             "publisher": "Microsoft.EnterpriseCloud.Monitoring",
