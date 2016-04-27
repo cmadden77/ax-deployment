@@ -515,7 +515,7 @@
           "type": "Microsoft.Resources/deployments",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-            "[concat('Microsoft.Compute/virtualMachines/extensions/', variables('vmName'),'/joindomain')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
           ],
           "properties": {
             "mode": "Incremental",
@@ -608,7 +608,7 @@
           "type": "Microsoft.Resources/deployments",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
-            "[concat('Microsoft.Compute/virtualMachines/extensions/', variables('vmName1'),'/joindomain')]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
           ],
           "properties": {
             "mode": "Incremental",
