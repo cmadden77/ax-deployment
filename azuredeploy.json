@@ -524,6 +524,7 @@
         {
           "apiVersion": "2016-02-01",
           "name": "[concat(variables('vmName'),'/AntiMalware')]",
+          "location": "[resourceGroup().location]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
@@ -639,6 +640,7 @@
         {
           "apiVersion": "2016-02-01",
           "name": "[concat(variables('vmName1'),'/AntiMalware')]",
+          "location": "[resourceGroup().location]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
