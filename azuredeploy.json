@@ -522,23 +522,34 @@
           }
         },
         {
-          "apiVersion": "2015-05-01-preview",
-          "name": "[concat(variables('vmName'),'/AntiMalware')]",
-          "location": "[resourceGroup().location]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName1'),'/','Antimalware')]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[resourceGroup().location]",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'/extensions/joindomain')]"
           ],
           "properties": {
-            "mode": "Incremental",
-            "templateLink": {
-              "uri": "[variables('MalwareTemplate')]",
-              "contentVersion": "1.0.0.0"
+            "publisher": "Microsoft.Azure.Security",
+            "type": "IaaSAntimalware",
+            "typeHandlerVersion": "1.1",
+            "settings": {
+              "AntimalwareEnabled": "true",
+              "Exclusions": {
+                "Paths": "f:\\sysvol\\;f:\\ntds\\;",
+                "Extensions": ".mdf;.ldf;.ndf;.bak;.trn;.edb;.sdb;.chk;.jrs;.pol;.dit",
+                "Processes": "sqlserver.exe;ReportingServicesService.exe;MSMDSrv.exe"
+              },
+              "RealtimeProtectionEnabled": "true",
+              "ScheduledScanSettings": {
+                "isEnabled": "true",
+                "scanType": "Quick",
+                "day": "7",
+                "time": "120"
+              }
             },
-            "parameters": {
-              "vmName": { "value": "[variables('vmName')]" }
-            }
+            "protectedSettings": null
           }
         },
         {
@@ -638,23 +649,34 @@
           }
         },
         {
-          "apiVersion": "2015-05-01-preview",
-          "name": "[concat(variables('vmName1'),'/AntiMalware')]",
-          "location": "[resourceGroup().location]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName1'),'/','Antimalware')]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[resourceGroup().location]",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
           ],
           "properties": {
-            "mode": "Incremental",
-            "templateLink": {
-              "uri": "[variables('MalwareTemplate')]",
-              "contentVersion": "1.0.0.0"
+            "publisher": "Microsoft.Azure.Security",
+            "type": "IaaSAntimalware",
+            "typeHandlerVersion": "1.1",
+            "settings": {
+              "AntimalwareEnabled": "true",
+              "Exclusions": {
+                "Paths": "f:\\sysvol\\;f:\\ntds\\;",
+                "Extensions": ".mdf;.ldf;.ndf;.bak;.trn;.edb;.sdb;.chk;.jrs;.pol;.dit",
+                "Processes": "sqlserver.exe;ReportingServicesService.exe;MSMDSrv.exe"
+              },
+              "RealtimeProtectionEnabled": "true",
+              "ScheduledScanSettings": {
+                "isEnabled": "true",
+                "scanType": "Quick",
+                "day": "7",
+                "time": "120"
+              }
             },
-            "parameters": {
-              "vmName": { "value": "[variables('vmName1')]" }
-            }
+            "protectedSettings": null
           }
         },
         {
