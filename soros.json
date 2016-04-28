@@ -26,6 +26,12 @@
     "adminUserName": {
       "value": "adadministrator"
     },
+    "domainPassword": {
+      "value": "Orange16"
+    },
+    "adminPassword": {
+      "value": "Orange16"
+    },
     "sizeOfEachDataDiskInGB": {
       "value": "20"
     },
