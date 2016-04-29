@@ -238,7 +238,7 @@
       "name": "[variables('nicName1')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "concat('Microsoft.Resources/deployments/', variables('networkSecurityGroupName'))]",
+        "[concat('Microsoft.Resources/deployments/', variables('networkSecurityGroupName'))]",
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]"
       ],
       "properties": {
