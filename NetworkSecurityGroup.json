@@ -1,0 +1,138 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ClientShortName": {
+      "type": "String"
+    },
+    "clientcode": {
+      "type": "String"
+    }
+
+
+  },
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "NetworkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'NSG')]"
+
+  },
+  "resources": [
+    {
+      "comments": "Current Network Security Group in Use",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('NetworkSecurityGroupName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[variables('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "HTTP",
+            "properties": {
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "SSL",
+            "properties": {
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Nagios",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "12489",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 109,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Webdeploy",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8172",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 108,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "SQL",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "1433",
+              "sourceAddressPrefix": "4.78.164.162",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 120,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "RDP",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 130,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "AllowMGMT-Soros",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.254.1.0/24",
+              "destinationAddressPrefix": "10.254.2.0/24",
+              "access": "Allow",
+              "priority": 140,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "AllowSoros-MGMT",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.254.2.0/24",
+              "destinationAddressPrefix": "10.254.1.0/24",
+              "access": "Allow",
+              "priority": 141,
+              "direction": "Outbound"
+            }
+          }
+        ]
+      },
+      "dependsOn": [ ]
+    }
+
+  ]
+}

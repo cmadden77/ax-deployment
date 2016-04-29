@@ -141,7 +141,15 @@
       "metadata": {
         "description": "current date in the format %Y-%m-%d"
       }
+    },
+    "subnetId": {
+      "type": "string",
+
+      "metadata": {
+        "description": "New Network Subnet ID e.g. ax-soros-subnet"
+      }
     }
+
   },
   "variables": {
     "location": "[resourceGroup().location]",
@@ -161,12 +169,14 @@
     "dnsLabelPrefix1": "[concat('axioma-',parameters('ClientShortName'),'-',parameters('envCode'),'-',parameters('clientcode'))]",
     "vnetID": "[resourceId('ax-mgmt-dc', 'Microsoft.Network/virtualNetworks', variables('existingVNETName'))]",
     "subnetId": "MGMTSubnet",
-    "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetId'))]",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetId'))]",
     "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),parameters('currentdate'),'-OS.vhd')]",
     "DataDisk0VhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),parameters('currentdate'),'-DataDisk-0.vhd')]",
     "osDiskVhdName1": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName1'),parameters('currentdate'),'-OS.vhd')]",
     "apiVersion": "2015-06-15",
     "MalwareTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/malware.json",
+    "NetworkSecurityGroupTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/NetworkSecurityGroup.json",
+    "networkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'-NSG')]",
     "ScriptStorageAccountName": "us4prodclientsarmaxvms",
     "ScriptFileToRun": "configure-sqlstorage.ps1",
     "ScriptStorageAccountResourceGroup": "ax-mgmt-dc",
@@ -182,16 +192,8 @@
     "dataDisk3VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk3.vhd')]",
     "dataDisk4VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk4.vhd')]",
     "dataDisk5VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk5.vhd')]",
-    "dataDisk6VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk6.vhd')]",
-    "dataDisk7VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk7.vhd')]",
-    "dataDisk8VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk8.vhd')]",
-    "dataDisk9VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk9.vhd')]",
-    "dataDisk10VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk10.vhd')]",
-    "dataDisk11VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk11.vhd')]",
-    "dataDisk12VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk12.vhd')]",
-    "dataDisk13VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk13.vhd')]",
-    "dataDisk14VhdName": "[concat('http://',variables('CreateStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),'dataDisk14.vhd')]",
-    "CreateStorageAccountName": "[concat(parameters('datacenterCode'),parameters('envCode'),'axioma',parameters('ClientCode'),'arm')]"
+    "CreateStorageAccountName": "[concat(parameters('datacenterCode'),parameters('envCode'),'axioma',parameters('ClientCode'),'arm')]",
+    "minisubnetprefix": "10.254.5.0/24"
   },
   "resources": [
     {
@@ -237,7 +239,8 @@
       "name": "[variables('nicName')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', 'MGMTVNET')]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -249,7 +252,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
               },
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[variables('minisubnetprefix')]"
               }
             }
           }
@@ -262,6 +265,7 @@
       "name": "[variables('nicName1')]",
       "location": "[variables('location')]",
       "dependsOn": [
+        "Microsoft.Resources/deployments/",
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]"
       ],
       "properties": {
@@ -278,7 +282,28 @@
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "variables('networkSecurityGroupName')",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [ ],
+
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "(variables('NetworkSecurityGroupTemplate')",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "ClientShortName": { "value": "[parameters('ClientShortName')]" },
+          "Clientcode": { "value": "[parameters('ClientCode')]" }
+        }
       }
     },
     {

@@ -51,13 +51,16 @@
       "value": "prod"
     },
     "ClientCode": {
-      "value": "dd"
+      "value": "zz"
     },
     "clientShortName": {
-      "value": "test03"
+      "value": "test04"
     },
     "currentDate": {
       "value": "16-04-25"
+    },
+    "subnetRef": {
+      "value": "aaasubnet"
     }
   }
 }
