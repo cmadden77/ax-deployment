@@ -262,7 +262,7 @@
       }
     },
     {
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "2016-02-01",
       "name": "NetworkSecurityGroup",
       "type": "Microsoft.Resources/deployments",
 
