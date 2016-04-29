@@ -168,7 +168,6 @@
     "dnsLabelPrefix": "[concat('ax-',parameters('envCode'),'-db-',parameters('clientcode'))]",
     "dnsLabelPrefix1": "[concat('axioma-',parameters('ClientShortName'),'-',parameters('envCode'),'-',parameters('clientcode'))]",
     "vnetID": "[resourceId('ax-mgmt-dc', 'Microsoft.Network/virtualNetworks', variables('existingVNETName'))]",
-    "subnetId": "MGMTSubnet",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetId'))]",
     "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),parameters('currentdate'),'-OS.vhd')]",
     "DataDisk0VhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',variables('vmName'),parameters('currentdate'),'-DataDisk-0.vhd')]",

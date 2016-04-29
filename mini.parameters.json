@@ -59,7 +59,7 @@
     "currentDate": {
       "value": "16-04-25"
     },
-    "subnetRef": {
+    "subnetId": {
       "value": "aaasubnet"
     }
   }
