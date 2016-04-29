@@ -145,7 +145,7 @@
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "vmName": "[concat('AX-',parameters('ClientShortName'),'-DB-',parameters('clientcode'))]",
+    "vmName": "[concat('ax-',parameters('envCode'),'-db-',parameters('clientcode'))]",
     "vmName1": "[concat(parameters('ClientShortName'),'-',parameters('envCode'),'-',parameters('clientcode'))]",
     "DomaintoJoin": "ad.axioma.com",
     "ouPath": "OU=Customers; DC=ad; DC=axioma; DC=com",
@@ -168,6 +168,8 @@
     "apiVersion": "2015-06-15",
     "MalwareTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/malware.json",
     "ScriptStorageAccountName": "us4prodclientsarmaxvms",
+    "NetworkSecurityGroupTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/NetworkSecurityGroup.json",
+    "networkSecurityGroupName": "[concat('ax-',parameters('ClientShortName'),'-',parameters('clientcode'),'-nsg')]",
     "ScriptFileToRun": "configure-sqlstorage.ps1",
     "ScriptStorageAccountResourceGroup": "ax-mgmt-dc",
     "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('ScriptStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('ScriptStorageAccountName'))]",
@@ -237,7 +239,8 @@
       "name": "[variables('nicName')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "Microsoft.Resources/deployments/NetworkSecurityGroup"
       ],
       "properties": {
         "ipConfigurations": [
@@ -253,7 +256,10 @@
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        }
       }
     },
     {
@@ -262,7 +268,8 @@
       "name": "[variables('nicName1')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]",
+        "Microsoft.Resources/deployments/NetworkSecurityGroup"
       ],
       "properties": {
         "ipConfigurations": [
@@ -278,7 +285,27 @@
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-02-01",
+      "name": "NetworkSecurityGroup",
+      "type": "Microsoft.Resources/deployments",
+
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/NetworkSecurityGroup.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "ClientShortName": { "value": "[parameters('ClientShortName')]" },
+          "Clientcode": { "value": "[parameters('ClientCode')]" }
+        }
       }
     },
     {
