@@ -239,7 +239,7 @@
       "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName1'))]",
-        "[concat('Microsoft.Resources/deployments/', variables('networkSecurityGroupName'))]"
+        "Microsoft.Resources/deployments/NetworkSecurityGroup"
       ],
       "properties": {
         "ipConfigurations": [
@@ -263,12 +263,11 @@
     },
     {
       "apiVersion": "[variables('apiVersion')]",
-      "name": "variables('networkSecurityGroupName')",
+      "name": "NetworkSecurityGroup",
       "type": "Microsoft.Resources/deployments",
-      "dependsOn": [ ],
 
       "properties": {
-        "mode": "incremental",
+        "mode": "Incremental",
         "templateLink": {
           "uri": "(variables('NetworkSecurityGroupTemplate')",
           "contentVersion": "1.0.0.0"
