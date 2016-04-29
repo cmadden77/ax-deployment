@@ -269,7 +269,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "(variables('NetworkSecurityGroupTemplate')",
+          "uri": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/NetworkSecurityGroup.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
