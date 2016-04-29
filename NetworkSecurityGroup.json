@@ -13,7 +13,7 @@
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "NetworkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'NSG')]"
+    "NetworkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'-NSG')]"
 
   },
   "resources": [
