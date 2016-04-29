@@ -17,9 +17,6 @@
     "osDiskVhdUri1": {
       "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SERVER-US4-PROD-2015-11-17-os-2015-11-17.vhd"
     },
-    "osDiskVhdUri2": {
-      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SERVER-US4-PROD-2015-11-17-os-2015-11-17.vhd"
-    },
     "dataDisk0VhdUri": {
       "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-datadisk-0-2015-11-17.vhd"
     },
