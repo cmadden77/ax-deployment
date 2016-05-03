@@ -6,10 +6,20 @@
       "value": "us4prodclientsarmaxvms"
     },
     "workspaceId": {
-      "value": "a33accb5-5bad-46eb-b131-c856c145eb85"
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault/"
+        },
+        "secretName": "workspaceId"
+      }
     },
     "workspaceKey": {
-      "value": "ej8UM7mdmKJJtTR7H6aU9yxvhWkGHCmYHUq4eWWptxy6m3LS0wrc7YsvKsUzDb1TZDA12q7RN9VCLYrS340NGQ=="
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault/"
+        },
+        "secretName": "workspaceKey"
+      }
     },
     "osDiskVhdUri": {
       "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-os-2015-11-17.vhd"
@@ -24,44 +34,54 @@
       "value": "adadministrator"
     },
     "domainPassword": {
-      "value": "Orange16"
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault/"
+        },
+        "secretName": "DomainPassword"
+      }
     },
-    "adminUserName": {
-      "value": "adadministrator"
-    },
+        "adminUserName": {
+          "value": "adadministrator"
+        },
     "adminPassword": {
-      "value": "Orange16"
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault/"
+        },
+        "secretName": "LocalAdminPassword"
+      }
     },
-    "sizeOfEachDataDiskInGB": {
-      "value": "10"
-    },
-    "vmSize": {
-      "value": "Standard_d2"
-    },
-    "SQLStoragePool": {
-      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/scripts/configure-sqlstorage.ps1"
-    },
-    "createStorageAccountType": {
-      "value": "Standard_LRS"
-    },
-    "datacenterCode": {
-      "value": "us4"
-    },
-    "envCode": {
-      "value": "prod"
-    },
-    "ClientCode": {
-      "value": "rr"
-    },
-    "clientShortName": {
-      "value": "test01"
-    },
-    "currentDate": {
-      "value": "16-04-25"
-    },
-    "subnetId": {
-      "value": "aaasubnet"
-    }
-  }
+        "sizeOfEachDataDiskInGB": {
+          "value": "10"
+        },
+        "vmSize": {
+          "value": "Standard_d2"
+        },
+        "SQLStoragePool": {
+          "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/scripts/configure-sqlstorage.ps1"
+        },
+        "createStorageAccountType": {
+          "value": "Standard_LRS"
+        },
+        "datacenterCode": {
+          "value": "us4"
+        },
+        "envCode": {
+          "value": "prod"
+        },
+        "ClientCode": {
+          "value": "r3"
+        },
+        "clientShortName": {
+          "value": "test02"
+        },
+        "currentDate": {
+          "value": "16-04-25"
+        },
+        "subnetId": {
+          "value": "aaasubnet"
+        }
+      }
 }
 
