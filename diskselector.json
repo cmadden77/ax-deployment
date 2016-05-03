@@ -34,6 +34,12 @@
         "description": "Name of the storage account where the data disks are stored"
       }
     },
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Virtual Machine"
+      }
+    },
     "diskCaching": {
       "type": "string",
       "allowedValues": [
@@ -77,6 +83,18 @@
     },
     "dataDisks": {
       "1": [
+        {
+          "caching": "None",
+          "createOption": "FromImage",
+          "image": {
+            "uri": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-datadisk-0-2015-11-17.vhd"
+          },
+          "lun": 0,
+          "name": "[concat(parameters('vmName'),'-DataDisk0')]",
+          "vhd": {
+            "Uri": "[variables('dataDisk0VhdName')]"
+          }
+        },
         {
           "name": "datadisk1",
           "lun": 1,
@@ -923,7 +941,8 @@
         "[variables('dataDisks')['63'][0]]",
         "[variables('dataDisks')['64'][0]]"
       ]
-    }
+    },
+    "DataDisk0VhdName": "[concat('http://',parameters('diskStorageAccountName'),'.blob.core.windows.net/vhds/',parameters('vmName'),'-DataDisk-0.vhd')]"
   },
   "resources": [ ],
   "outputs": {
