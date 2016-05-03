@@ -1,0 +1,77 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "userImageStorageAccountName": {
+      "value": "us4prodclientsarmaxvms"
+    },
+    "workspaceId": {
+      "value": "a33accb5-5bad-46eb-b131-c856c145eb85"
+    },
+    "workspaceKey": {
+      "value": "ej8UM7mdmKJJtTR7H6aU9yxvhWkGHCmYHUq4eWWptxy6m3LS0wrc7YsvKsUzDb1TZDA12q7RN9VCLYrS340NGQ=="
+    },
+    "osDiskVhdUri": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-os-2015-11-17.vhd"
+    },
+    "osDiskVhdUri1": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SERVER-US4-PROD-2015-11-17-os-2015-11-17.vhd"
+    },
+    "dataDisk0VhdUri": {
+      "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/images/images/SQL-US4-PROD-2015-11-17-datadisk-0-2015-11-17.vhd"
+    },
+    "domainUsername": {
+      "value": "adadministrator"
+    },
+    "domainPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault"
+        },
+        "secretName": "DomainPassword"
+      }
+    },
+        "adminUserName": {
+          "value": "adadministrator"
+        },
+    "adminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/de2bf546-ab29-4fe6-8619-b8d54652c7a0/resourceGroups/ax-mgmt-dc/providers/Microsoft.KeyVault/vaults/ax-key-vault"
+        },
+        "secretName": "LocalAdminPassword"
+      }
+    },
+        "sizeOfEachDataDiskInGB": {
+          "value": "10"
+        },
+        "vmSize": {
+          "value": "Standard_d2"
+        },
+        "SQLStoragePool": {
+          "value": "https://us4prodclientsarmaxvms.blob.core.windows.net/scripts/configure-sqlstorage.ps1"
+        },
+        "createStorageAccountType": {
+          "value": "Standard_LRS"
+        },
+        "datacenterCode": {
+          "value": "us4"
+        },
+        "envCode": {
+          "value": "prod"
+        },
+        "ClientCode": {
+          "value": "r3"
+        },
+        "clientShortName": {
+          "value": "test02"
+        },
+        "currentDate": {
+          "value": "16-04-25"
+        },
+        "subnetId": {
+          "value": "aaasubnet"
+        }
+      }
+}
+
