@@ -353,6 +353,10 @@
           "apiVersion": "2015-05-01-preview",
           "name": "Antimalware",
           "type": "Microsoft.Resources/deployments",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
+          ],
 
           "properties": {
             "mode": "Incremental",
@@ -372,7 +376,7 @@
           "location": "[resourceGroup().location]",
           "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/AntiMalware')]"
+            "Microsoft.Resources/deployments/Antimalware"
           ],
           "properties": {
             "publisher": "Microsoft.EnterpriseCloud.Monitoring",
