@@ -175,7 +175,7 @@
     "apiVersion": "2015-06-15",
     "MalwareTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/malware.json",
     "NetworkSecurityGroupTemplate": "https://raw.githubusercontent.com/cmadden77/ax-deployment/master/NetworkSecurityGroup.json",
-    "networkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'-NSG')]",
+    "networkSecurityGroupName": "[concat('ax-',parameters('ClientShortName'),'-',parameters('clientcode'),'-nsg')]",
     "ScriptStorageAccountName": "us4prodclientsarmaxvms",
     "ScriptFileToRun": "configure-sqlstorage.ps1",
     "ScriptStorageAccountResourceGroup": "ax-mgmt-dc",
@@ -350,34 +350,19 @@
           }
         },
         {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('vmName1'),'/','Antimalware')]",
           "apiVersion": "2015-05-01-preview",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName1'),'/extensions/joindomain')]"
-          ],
+          "name": "Antimalware",
+          "type": "Microsoft.Resources/deployments",
+
           "properties": {
-            "publisher": "Microsoft.Azure.Security",
-            "type": "IaaSAntimalware",
-            "typeHandlerVersion": "1.1",
-            "settings": {
-              "AntimalwareEnabled": "true",
-              "Exclusions": {
-                "Paths": "f:\\sysvol\\;f:\\ntds\\;",
-                "Extensions": ".mdf;.ldf;.ndf;.bak;.trn;.edb;.sdb;.chk;.jrs;.pol;.dit",
-                "Processes": "sqlserver.exe;ReportingServicesService.exe;MSMDSrv.exe"
-              },
-              "RealtimeProtectionEnabled": "true",
-              "ScheduledScanSettings": {
-                "isEnabled": "true",
-                "scanType": "Quick",
-                "day": "7",
-                "time": "120"
-              }
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "MalwareTemplate",
+              "contentVersion": "1.0.0.0"
             },
-            "protectedSettings": null
+            "parameters": {
+              "vmName": { "value": "[variables('vmName1')]" }
+            }
           }
         },
         {
