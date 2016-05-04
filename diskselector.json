@@ -34,6 +34,12 @@
         "description": "Name of the storage account where the data disks are stored"
       }
     },
+    "userImageStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account where the image data disk is stored"
+      }
+    },
     "vmName": {
       "type": "string",
       "metadata": {
@@ -942,7 +948,7 @@
         "[variables('dataDisks')['64'][0]]"
       ]
     },
-    "DataDisk0VhdName": "[concat('http://',parameters('diskStorageAccountName'),'.blob.core.windows.net/vhds/',parameters('vmName'),'-DataDisk-0.vhd')]"
+    "DataDisk0VhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.windows.net/vhds/',parameters('vmName'),'-DataDisk-0.vhd')]"
   },
   "resources": [ ],
   "outputs": {
