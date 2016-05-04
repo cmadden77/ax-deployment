@@ -91,6 +91,19 @@
             }
           },
           {
+            "name": "RDP-RDSServer",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "10.254.1.7/32",
+              "destinationAddressPrefix": "*",
+              "access": "Deny",
+              "priority": 129,
+              "direction": "Inbound"
+            }
+          },
+          {
             "name": "RDP",
             "properties": {
               "protocol": "*",
@@ -98,13 +111,13 @@
               "destinationPortRange": "3389",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
-              "access": "Allow",
+              "access": "Deny",
               "priority": 130,
               "direction": "Inbound"
             }
           },
           {
-            "name": "AllowMGMT-Soros",
+            "name": "[concat('Allow-MGMT-',parameters('ClientShortName'))]",
             "properties": {
               "protocol": "*",
               "sourcePortRange": "*",
@@ -117,7 +130,7 @@
             }
           },
           {
-            "name": "AllowSoros-MGMT",
+            "name": "[concat('Allow-',parameters('ClientShortName'),'-MGMT')]",
             "properties": {
               "protocol": "*",
               "sourcePortRange": "*",
@@ -134,5 +147,11 @@
       "dependsOn": [ ]
     }
 
-  ]
+  ],
+  "outputs": {
+    "networksecuritygroup": {
+      "type": "string",
+      "value": "[concat('Network Security Group Created for ',parameters('ClientShortName'))] "
+    }
+  }
 }
