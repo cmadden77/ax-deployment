@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -17,7 +17,7 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "NetworkSecurityGroupName": "[concat('AX-',parameters('ClientShortName'),'-',parameters('clientcode'),'-NSG')]",
-    "MGMTServers": "10.254.1.0/29" 
+    "MGMTServers": "10.254.1.0/29"
 
   },
   "resources": [
@@ -30,6 +30,19 @@
       "properties": {
         "securityRules": [
 
+          {
+            "name": "[concat('Allow-',parameters('ClientShortName'),'-NTP-MGMT')]",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "123",
+              "sourceAddressPrefix": "[parameters('IPRange')]",
+              "destinationAddressPrefix": "[variables('MGMTServers')]",
+              "access": "Allow",
+              "priority": 169,
+              "direction": "Outbound"
+            }
+          },
           {
             "name": "[concat('Allow-',parameters('ClientShortName'),'-LDAP-MGMT')]",
             "properties": {
@@ -235,6 +248,32 @@
               "destinationAddressPrefix": "10.254.1.0/24",
               "access": "Deny",
               "priority": 199,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "IntraSubnet-Communication",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "[parameters('IPRange')]",
+              "destinationAddressPrefix": "[parameters('IPRange')]",
+              "access": "Allow",
+              "priority": 998,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "[concat('Deny-',parameters('ClientShortName'),'-VNET')]",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "[parameters('IPRange')]",
+              "destinationAddressPrefix": "VirtualNetwork",
+              "access": "Deny",
+              "priority": 999,
               "direction": "Outbound"
             }
           },

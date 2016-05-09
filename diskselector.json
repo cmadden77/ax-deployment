@@ -21,6 +21,7 @@
         "14",
         "15",
         "16",
+        "30",
         "32",
         "64"
       ],
@@ -84,6 +85,7 @@
       "14": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('dataDisks')['13'], variables('dataDisks')['14'])]",
       "15": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('dataDisks')['13'], variables('dataDisks')['14'], variables('dataDisks')['15'])]",
       "16": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('diskDeltas')['16delta'])]",
+      "30": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('diskDeltas')['16delta'], variables('diskDeltas')['30delta'])]",
       "32": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('diskDeltas')['16delta'], variables('diskDeltas')['32delta'])]",
       "64": "[concat(variables('diskDeltas')['4delta'], variables('diskDeltas')['8delta'], variables('diskDeltas')['12delta'], variables('diskDeltas')['16delta'], variables('diskDeltas')['32delta'], variables('diskDeltas')['64delta'])]"
     },
@@ -869,7 +871,7 @@
         }
       ]
     },
-    "_comment": "The delta arrays below build the difference from 0 to 4, 4 to 8, 8 to 12 disks and so on",
+    "_comment": "The delta arrays below build the difference from 0 to 4, 4 to 8, 8 to 12 disks and so on, added 30 disks as per requirement",
     "diskDeltas": {
       "4delta": [
         "[variables('dataDisks')['1'][0]]",
@@ -894,6 +896,22 @@
         "[variables('dataDisks')['14'][0]]",
         "[variables('dataDisks')['15'][0]]",
         "[variables('dataDisks')['16'][0]]"
+      ],
+      "30delta": [
+        "[variables('dataDisks')['17'][0]]",
+        "[variables('dataDisks')['18'][0]]",
+        "[variables('dataDisks')['19'][0]]",
+        "[variables('dataDisks')['20'][0]]",
+        "[variables('dataDisks')['21'][0]]",
+        "[variables('dataDisks')['22'][0]]",
+        "[variables('dataDisks')['23'][0]]",
+        "[variables('dataDisks')['24'][0]]",
+        "[variables('dataDisks')['25'][0]]",
+        "[variables('dataDisks')['26'][0]]",
+        "[variables('dataDisks')['27'][0]]",
+        "[variables('dataDisks')['28'][0]]",
+        "[variables('dataDisks')['29'][0]]",
+        "[variables('dataDisks')['30'][0]]"
       ],
       "32delta": [
         "[variables('dataDisks')['17'][0]]",
