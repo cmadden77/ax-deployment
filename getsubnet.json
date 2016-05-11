@@ -1,0 +1,46 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ClientCode": {
+      "type": "string",
+      "defaultValue": "c14",
+      "metadata": {
+        "description": "Specify the Client code"
+      }
+    },
+    "ClientShortName": {
+      "type": "string",
+      "defaultValue": "soros",
+
+      "metadata": {
+        "description": "Specify the Client code"
+      }
+    },
+    "existingVNETName": {
+      "type": "string",
+      "defaultValue": "MGMTVNET",
+
+      "metadata": {
+        "description": "Specify the Client code"
+      }
+    }
+  },
+  "variables": {
+    "existingRG": "ax-mgmt-dc",
+    "vnetID": "[resourceId(variables('existingRG'), 'Microsoft.Network/virtualNetworks', parameters('existingVNETName'))]",
+    "subnetId": "[concat('ax-', parameters('ClientShortName'), '-subnet')]",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetId'))]"
+
+
+  },
+  "resources": [
+
+  ],
+  "outputs": {
+    "addressPrefix": {
+      "type": "string",
+      "value": "[reference(variables('subnetRef'),'2016-03-30').addressPrefix]"
+    }
+  }
+}
